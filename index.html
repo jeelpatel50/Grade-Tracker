@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GradeTracker - Course Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Welcome/Landing Page -->
+        <div id="welcome-view" class="view">
+            <div class="welcome-container">
+                <div class="welcome-hero">
+                    <h1 class="welcome-title">GradeTracker</h1>
+                    <p class="welcome-subtitle">Track your grades, calculate final exam requirements, and achieve your academic goals</p>
+                </div>
+                
+                <div class="welcome-options">
+                    <div class="auth-card">
+                        <h2 class="auth-card__title">Get Started</h2>
+                        <div class="auth-buttons">
+                            <button class="btn btn--primary btn--full-width" id="login-btn">Login</button>
+                            <button class="btn btn--secondary btn--full-width" id="register-btn">Register</button>
+                            <div class="divider">
+                                <span class="divider-text">or</span>
+                            </div>
+                            <button class="btn btn--outline btn--full-width" id="guest-btn">
+                                <span class="btn__icon">🎯</span>
+                                Try as Guest (Demo Mode)
+                            </button>
+                        </div>
+                        <div class="guest-benefits">
+                            <p class="guest-benefits__text">Demo mode includes sample courses and assignments to explore all features instantly!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="features-preview">
+                    <h3 class="features-title">Key Features</h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-title">Grade Calculations</div>
+                            <div class="feature-description">Automatic weighted grade calculations with real-time updates</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-title">Final Exam Predictor</div>
+                            <div class="feature-description">Calculate exactly what you need on your final to reach your target grade</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-title">Progress Tracking</div>
+                            <div class="feature-description">Visual progress bars and completion percentages for each course</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📋</div>
+                            <div class="feature-title">Assignment Management</div>
+                            <div class="feature-description">Organize assignments by type with customizable weights and due dates</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Auth Views Container -->
+        <div id="auth-view" class="view hidden">
+            <!-- Login Form -->
+            <div id="login-view" class="auth-view">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <button class="btn btn--outline btn--sm auth-back" id="login-back-btn">← Back</button>
+                            <h2 class="auth-title">Welcome Back</h2>
+                            <p class="auth-subtitle">Sign in to your GradeTracker account</p>
+                        </div>
+                        <form id="login-form" class="auth-form">
+                            <div class="form-group">
+                                <label class="form-label" for="login-username">Username or Email</label>
+                                <input type="text" class="form-control" id="login-username" required autocomplete="username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="login-password">Password</label>
+                                <input type="password" class="form-control" id="login-password" required autocomplete="current-password">
+                            </div>
+                            <div class="auth-error" id="login-error"></div>
+                            <button type="submit" class="btn btn--primary btn--full-width" id="login-submit">Sign In</button>
+                        </form>
+                        <div class="auth-footer">
+                            <p>Don't have an account? <button class="btn-link" id="show-register">Register here</button></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-view" class="auth-view hidden">
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <button class="btn btn--outline btn--sm auth-back" id="register-back-btn">← Back</button>
+                            <h2 class="auth-title">Create Account</h2>
+                            <p class="auth-subtitle">Join GradeTracker today</p>
+                        </div>
+                        <form id="register-form" class="auth-form">
+                            <div class="form-group">
+                                <label class="form-label" for="register-username">Username</label>
+                                <input type="text" class="form-control" id="register-username" required autocomplete="username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="register-email">Email</label>
+                                <input type="email" class="form-control" id="register-email" required autocomplete="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="register-password">Password</label>
+                                <input type="password" class="form-control" id="register-password" required autocomplete="new-password">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="register-confirm">Confirm Password</label>
+                                <input type="password" class="form-control" id="register-confirm" required autocomplete="new-password">
+                            </div>
+                            <div class="auth-error" id="register-error"></div>
+                            <button type="submit" class="btn btn--primary btn--full-width" id="register-submit">Create Account</button>
+                        </form>
+                        <div class="auth-footer">
+                            <p>Already have an account? <button class="btn-link" id="show-login">Sign in here</button></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application -->
+        <div id="main-view" class="view hidden">
+            <!-- Header -->
+            <header class="header">
+                <div class="container">
+                    <div class="header__content">
+                        <div class="header__left">
+                            <h1 class="header__title">GradeTracker</h1>
+                            <div class="session-indicator" id="session-indicator"></div>
+                        </div>
+                        <nav class="header__nav">
+                            <span class="breadcrumb__item breadcrumb__item--active" id="breadcrumb-text">Dashboard</span>
+                            <div class="header__actions">
+                                <button class="btn btn--outline btn--sm" id="account-btn">Account</button>
+                                <button class="btn btn--secondary btn--sm" id="logout-btn">Logout</button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main">
+                <div class="container">
+                    <!-- Dashboard View -->
+                    <div id="dashboard-view" class="dashboard-view">
+                        <div class="dashboard__header">
+                            <div class="dashboard__title-section">
+                                <h2 class="dashboard__title">My Courses</h2>
+                                <p class="dashboard__subtitle">Track your grades and calculate what you need for finals</p>
+                            </div>
+                            <button class="btn btn--primary" id="add-course-btn">
+                                <span class="btn__icon">+</span>
+                                Add Course
+                            </button>
+                        </div>
+
+                        <div class="courses-grid" id="courses-grid">
+                            <!-- Course cards will be inserted here -->
+                        </div>
+
+                        <div class="empty-state" id="empty-state">
+                            <div class="empty-state__content">
+                                <div class="empty-state__icon">📚</div>
+                                <h3 class="empty-state__title">No courses yet</h3>
+                                <p class="empty-state__text">Add your first course to start tracking grades</p>
+                                <button class="btn btn--primary" id="add-first-course-btn">Add Course</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Detail View -->
+                    <div id="course-view" class="course-view hidden">
+                        <div class="course-header">
+                            <div class="course-header__nav">
+                                <button class="btn btn--secondary btn--sm" id="back-to-dashboard">
+                                    ← Back to Dashboard
+                                </button>
+                            </div>
+                            <div class="course-header__content">
+                                <div class="course-header__info">
+                                    <h2 class="course-header__title" id="course-title"></h2>
+                                    <p class="course-header__code" id="course-code"></p>
+                                </div>
+                                <div class="course-header__actions">
+                                    <button class="btn btn--outline btn--sm" id="edit-course-btn">Edit Course</button>
+                                    <button class="btn btn--primary" id="add-assignment-btn">
+                                        <span class="btn__icon">+</span>
+                                        Add Assignment
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-content">
+                            <!-- Grade Summary Card -->
+                            <div class="grade-summary card">
+                                <div class="grade-summary__content">
+                                    <div class="grade-summary__item">
+                                        <div class="grade-summary__label">Current Grade</div>
+                                        <div class="grade-summary__value">
+                                            <span class="grade-summary__percentage" id="current-percentage">--</span>
+                                            <span class="grade-summary__letter" id="current-letter">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="grade-summary__item">
+                                        <div class="grade-summary__label">Target Grade</div>
+                                        <div class="grade-summary__value">
+                                            <span class="grade-summary__percentage" id="target-percentage">--</span>
+                                            <span class="grade-summary__letter" id="target-letter">-</span>
+                                        </div>
+                                    </div>
+                                    <div class="grade-summary__item">
+                                        <div class="grade-summary__label">Course Complete</div>
+                                        <div class="grade-summary__value">
+                                            <span class="grade-summary__percentage" id="completion-percentage">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar__fill" id="progress-fill"></div>
+                                </div>
+                            </div>
+
+                            <!-- Final Exam Calculator -->
+                            <div class="final-calculator card">
+                                <div class="card__body">
+                                    <h3 class="final-calculator__title">Final Exam Calculator</h3>
+                                    <div class="final-calculator__content" id="final-calculator-content">
+                                        <div class="final-calculator__empty">
+                                            Add assignments to see final exam requirements
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Assignments List -->
+                            <div class="assignments-section">
+                                <div class="assignments-header">
+                                    <h3 class="assignments-title">Assignments</h3>
+                                    <div class="weight-summary">
+                                        <span class="weight-summary__text">Total Weight: </span>
+                                        <span class="weight-summary__value" id="total-weight">0%</span>
+                                        <span class="weight-summary__remaining" id="remaining-weight">(100% remaining)</span>
+                                    </div>
+                                </div>
+                                <div class="assignments-list" id="assignments-list">
+                                    <!-- Assignments will be inserted here -->
+                                </div>
+                                <div class="assignments-empty" id="assignments-empty">
+                                    <div class="assignments-empty__content">
+                                        <div class="assignments-empty__icon">📝</div>
+                                        <p class="assignments-empty__text">No assignments added yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Course Modal -->
+        <div class="modal hidden" id="course-modal">
+            <div class="modal__backdrop"></div>
+            <div class="modal__container">
+                <div class="modal__header">
+                    <h3 class="modal__title" id="course-modal-title">Add Course</h3>
+                    <button class="modal__close" id="course-modal-close">×</button>
+                </div>
+                <div class="modal__body">
+                    <form id="course-form">
+                        <div class="form-group">
+                            <label class="form-label" for="course-name">Course Name *</label>
+                            <input type="text" class="form-control" id="course-name" required placeholder="e.g., Introduction to Biology" maxlength="100">
+                            <div class="field-error" id="course-name-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="course-code">Course Code *</label>
+                            <input type="text" class="form-control" id="course-code" required placeholder="e.g., BIO101, EECS3421" maxlength="20">
+                            <div class="field-error" id="course-code-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="target-grade">Target Grade (%) *</label>
+                            <input type="number" class="form-control" id="target-grade" min="0" max="100" step="0.1" required placeholder="e.g., 90">
+                            <div class="field-error" id="target-grade-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="course-color">Color Theme</label>
+                            <select class="form-control" id="course-color">
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                                <option value="purple">Purple</option>
+                                <option value="orange">Orange</option>
+                                <option value="pink">Pink</option>
+                                <option value="teal">Teal</option>
+                                <option value="red">Red</option>
+                                <option value="yellow">Yellow</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal__footer">
+                    <button class="btn btn--secondary" id="course-cancel-btn">Cancel</button>
+                    <button class="btn btn--primary" id="course-save-btn">Save Course</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assignment Modal -->
+        <div class="modal hidden" id="assignment-modal">
+            <div class="modal__backdrop"></div>
+            <div class="modal__container">
+                <div class="modal__header">
+                    <h3 class="modal__title" id="assignment-modal-title">Add Assignment</h3>
+                    <button class="modal__close" id="assignment-modal-close">×</button>
+                </div>
+                <div class="modal__body">
+                    <form id="assignment-form">
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-name">Assignment Name *</label>
+                            <input type="text" class="form-control" id="assignment-name" required maxlength="100">
+                            <div class="field-error" id="assignment-name-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-type">Type *</label>
+                            <select class="form-control" id="assignment-type" required>
+                                <!-- Options will be populated by JS -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-grade">Grade (%) *</label>
+                            <input type="number" class="form-control" id="assignment-grade" min="0" max="100" step="0.1" required>
+                            <div class="field-error" id="assignment-grade-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-weight">Weight (%) *</label>
+                            <input type="number" class="form-control" id="assignment-weight" min="0" max="100" step="0.1" required>
+                            <div class="field-error" id="assignment-weight-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-date">Date *</label>
+                            <input type="date" class="form-control" id="assignment-date" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal__footer">
+                    <button class="btn btn--secondary" id="assignment-cancel-btn">Cancel</button>
+                    <button class="btn btn--primary" id="assignment-save-btn">Save Assignment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Calculator Modal -->
+        <div class="modal hidden" id="calculator-modal">
+            <div class="modal__backdrop"></div>
+            <div class="modal__container">
+                <div class="modal__header">
+                    <h3 class="modal__title">Final Exam Calculator</h3>
+                    <button class="modal__close" id="calculator-modal-close">×</button>
+                </div>
+                <div class="modal__body">
+                    <div class="calculator-content">
+                        <div class="form-group">
+                            <label class="form-label" for="desired-grade">Desired Final Grade (%)</label>
+                            <input type="number" class="form-control" id="desired-grade" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="final-weight">Final Exam Weight (%)</label>
+                            <input type="number" class="form-control" id="final-weight" min="0" max="100" step="0.1">
+                        </div>
+                        <div class="calculator-result" id="calculator-result">
+                            <!-- Results will be shown here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button class="btn btn--secondary" id="calculator-close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guest Mode Actions (only visible in demo mode) -->
+        <div class="guest-actions hidden" id="guest-actions">
+            <div class="guest-actions__content">
+                <button class="btn btn--outline btn--sm" id="reset-demo-btn">Reset Demo Data</button>
+                <button class="btn btn--primary btn--sm" id="create-account-btn">Create Account to Save Progress</button>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div class="toast hidden" id="notification-toast">
+            <div class="toast__content" id="toast-content"></div>
+            <button class="toast__close" id="toast-close">×</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
