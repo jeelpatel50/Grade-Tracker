@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|svg|ico))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "NILEDB_USER": "019a2dc5-8725-719b-9471-203689f5365f",
+    "NILEDB_PASSWORD": "c285761b-88dc-4893-af19-1bf9de7666fe",
+    "NILEDB_HOST": "us-west-2.db.thenile.dev",
+    "NILEDB_PORT": "5432",
+    "NILEDB_NAME": "Grade_calculator"
+  }
+}

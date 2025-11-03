@@ -1,0 +1,20 @@
+{
+  "name": "gradetracker",
+  "version": "1.0.0",
+  "description": "Grade tracking application with Nile Database",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
